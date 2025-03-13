@@ -59,7 +59,10 @@ ETL/
    source venv/bin/activate
    ```
 
-2. Place your email data in the `data/` directory or update the `maildir_paths` in `main.py` to point to your data location.
+2. Run the fetching script to get data:
+   ```bash
+   python main.py
+   ```
 
 3. Run the main script:
    ```bash
