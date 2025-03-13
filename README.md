@@ -1,4 +1,4 @@
-# ETL Project
+# EmailMiner.ai ETL Pipeline
 
 This project processes email data from the Enron dataset using a custom ETL (Extract, Transform, Load) pipeline.
 
