@@ -17,7 +17,7 @@ The ETL project parses email data from the Enron Maildir dataset, extracting rel
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ETL.git
+   git clone https://github.com/ADC-GDIT-Spring-2025/ETL.git
    cd ETL
    ```
 
