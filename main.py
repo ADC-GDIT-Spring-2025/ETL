@@ -4,7 +4,7 @@ from util.parser import EnronMaildirParser
 def main():
     # Define the directories to be processed
     maildir_paths = [
-        "data/test-data",
+        "data/maildir",
     ]
     
     # Create an instance of the parser

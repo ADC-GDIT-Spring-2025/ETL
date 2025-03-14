@@ -59,20 +59,40 @@ ETL/
    source venv/bin/activate
    ```
 
-2. Run the fetching script to get data:
+2. Create the data folder and then run the fetching script to get data:
    ```bash
-   python main.py
+   cd util
+   mkdir data
+   python fetch_data.py
    ```
 
-3. Run the main script:
+3. Create the user_data folder and then run the parser to generate the 5 json files:
+   parser.py takes in the directory for the database and the number of emails to parse as cmd line args.
    ```bash
-   python main.py
+   mkdir user_data
+   python parser.py data/maildir <num_emails_to_parse>
    ```
 
 4. The script will process the emails and output parsing statistics.
 
+5. To upload the parsed data to neo4j, start the neo4j database in the desktop app and run neo4j_uploader.py
+   ```bash
+   cd neo4j
+   python neo4j_uploader.py <max_emails> <max_users>
+   ```
+
+6. To view all nodes and relationships in the neo4j browser run the following cypher commands:
+   ```bash
+   MATCH (n) RETURN n;
+   ```
+   To remove all nodes and relationships in the neo4j browser run:
+   ```bash
+   MATCH (n) DETACH DELETE n;
+   ```
+
 ## Customization
 
+WARNING: `main.py` is currently deprecated
 You can modify the `main.py` file to:
 - Change the input data directories
 - Adjust the maximum number of emails to process
