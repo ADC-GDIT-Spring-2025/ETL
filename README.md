@@ -59,24 +59,23 @@ ETL/
    source venv/bin/activate
    ```
 
-2. Run the fetching script to get data:
+2. Place your email data (named `data.tar.gz`) in the `data/` directory.
+
+3. Run the fetching script to get data:
    ```bash
    python main.py
    ```
 
-3. Run the main script:
+4. Run the main script:
    ```bash
-   python main.py
+   chmod +x etl_parse.sh
+   ./etl_parse.sh
    ```
-
-4. The script will process the emails and output parsing statistics.
-
-## Customization
-
-You can modify the `main.py` file to:
-- Change the input data directories
-- Adjust the maximum number of emails to process
-- Customize the output format
+   
+   This script will:
+   - Read `data.tar.gz`
+   - Create `data/maildir` directory with raw data files
+   - Process raw files and output JSON objects with cleaned data
 
 ## Deactivating the Environment
 
@@ -84,4 +83,3 @@ When you're done working with the project, deactivate the virtual environment:
 ```bash
 deactivate
 ```
-
