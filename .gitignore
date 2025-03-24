@@ -9,3 +9,4 @@ __pycache__/
 *.pywz
 data
 user_data/
+venv/
