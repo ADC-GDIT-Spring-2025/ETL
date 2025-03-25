@@ -1,7 +1,10 @@
 import flask
 import json
+from flask_cors import CORS
+from flask import request
 
 app = flask.Flask(__name__)
+CORS(app) 
 
 @app.route('/')
 def index():
@@ -15,14 +18,23 @@ def threads():
 
 @app.route('/users')
 def users():
+    limit = request.args.get('limit', default=None, type=int)
     with open('user_data/users2.json', 'r') as f:
-        users = json.load(f)
-    return flask.jsonify(users)
+        users_dict = json.load(f)
+
+    if limit is not None:
+        # Convert dict to list of tuples, slice, and convert back to dict
+        users_dict = dict(list(users_dict.items())[:limit])
+
+    return flask.jsonify(users_dict)
 
 @app.route('/messages')
 def messages():
+    limit = request.args.get('limit', default=None, type=int)
     with open('user_data/messages2.json', 'r') as f:
         messages = json.load(f)
+    if limit is not None:
+        messages = messages[:limit]
     return flask.jsonify(messages)
 
 @app.route('/user-threads')
@@ -38,4 +50,4 @@ def thread_users():
     return flask.jsonify(thread_users)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='127.0.0.1', port=5002)

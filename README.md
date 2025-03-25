@@ -42,8 +42,8 @@ The ETL project parses email data from the Enron Maildir dataset, extracting rel
 
 Run the ETL pipeline setup script to download and process the Enron dataset:
 ```bash
-chmod +x setup_etl.sh
-./setup_etl.sh
+chmod +x etl_parse.sh
+./etl_parse.sh
 ```
 
 This script will:
