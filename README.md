@@ -71,19 +71,19 @@ The API provides the following endpoints:
 - `GET /` - Basic health check endpoint
 
 - `GET /messages` - Get all email messages from the dataset
-  - Returns the contents of messages2.json which contains all parsed email data
+  - Returns the contents of messages.json which contains all parsed email data
 
 - `GET /users` - Get all users from the dataset
-  - Returns the contents of users2.json which maps user email addresses to unique IDs
+  - Returns the contents of users.json which maps user email addresses to unique IDs
 
 - `GET /threads` - Get all email threads
-  - Returns the contents of threads2.json which maps thread subjects to unique IDs
+  - Returns the contents of threads.json which maps thread subjects to unique IDs
 
 - `GET /user-threads` - Get mapping of users to their email threads
-  - Returns the contents of user_threads2.json which shows which threads each user participated in
+  - Returns the contents of user_threads.json which shows which threads each user participated in
 
 - `GET /thread-users` - Get mapping of threads to their participating users
-  - Returns the contents of thread_users2.json which shows which users participated in each thread
+  - Returns the contents of thread_users.json which shows which users participated in each thread
 
 Example API calls:
 ```bash
