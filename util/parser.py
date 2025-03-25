@@ -139,18 +139,18 @@ def parse_email(pathname, orig=True, progress_bar=None):
         progress_bar.close()  # Close the progress bar when done
         try:
             # Write all collected data to JSON files
-            with open('user_data/messages2.json', 'w') as f:
+            with open('user_data/messages.json', 'w') as f:
                 json.dump(feeds, f)
-            with open('user_data/users2.json', 'w') as f:
+            with open('user_data/users.json', 'w') as f:
                 json.dump(users, f)
-            with open('user_data/threads2.json', 'w') as f:
+            with open('user_data/threads.json', 'w') as f:
                 json.dump(threads, f)
-            with open('user_data/thread-users2.json', 'w') as f:
+            with open('user_data/thread-users.json', 'w') as f:
                 # Convert sets to lists for JSON serialization
                 for thread in thread_users:
                     thread_users[thread] = list(thread_users[thread])
                 json.dump(thread_users, f)
-            with open('user_data/user-threads2.json', 'w') as f:
+            with open('user_data/user-threads.json', 'w') as f:
                 # Convert sets to lists for JSON serialization
                 for user in user_threads:
                     user_threads[user] = list(user_threads[user])
