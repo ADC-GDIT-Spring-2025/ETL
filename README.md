@@ -62,7 +62,7 @@ This script will:
    ```bash
    python app.py
    ```
-   The API will be available at `http://localhost:5000`
+   The API will be available at `http://localhost:5002`
 
 ### API Endpoints
 
@@ -88,19 +88,19 @@ The API provides the following endpoints:
 Example API calls:
 ```bash
 # Get all messages
-curl http://localhost:5000/messages
+curl http://localhost:5002/messages
 
 # Get all users
-curl http://localhost:5000/users
+curl http://localhost:5002/users
 
 # Get all threads
-curl http://localhost:5000/threads
+curl http://localhost:5002/threads
 
 # Get user-thread mappings
-curl http://localhost:5000/user-threads
+curl http://localhost:5002/user-threads
 
 # Get thread-user mappings
-curl http://localhost:5000/thread-users
+curl http://localhost:5002/thread-users
 ```
 
 ## Project Structure
