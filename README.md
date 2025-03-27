@@ -90,8 +90,14 @@ Example API calls:
 # Get all messages
 curl http://localhost:5002/messages
 
+# Get n messages
+curl http://localhost:5002/messages?limit={max_emails}
+
 # Get all users
 curl http://localhost:5002/users
+
+# Get n users
+curl http://localhost:5002/users?limit={max_users}
 
 # Get all threads
 curl http://localhost:5002/threads
