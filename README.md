@@ -1,10 +1,10 @@
-# EmailMiner.ai ETL Pipeline
+# ETL Project
 
-This project processes email data from the Enron dataset using a custom ETL (Extract, Transform, Load) pipeline.
+This project processes email data from the Enron dataset using a custom ETL (Extract, Transform, Load) pipeline and provides a Flask API for querying the processed data.
 
 ## Project Overview
 
-The ETL project parses email data from the Enron Maildir dataset, extracting relevant information and preparing it for analysis. The parser handles email metadata, recipients, and content.
+The ETL project parses email data from the Enron Maildir dataset, extracting relevant information and preparing it for analysis. The parser handles email metadata, recipients, and content. A Flask API is provided to query and analyze the processed data.
 
 ## Setup Instructions
 
@@ -12,6 +12,7 @@ The ETL project parses email data from the Enron Maildir dataset, extracting rel
 
 - Python 3.6 or higher
 - Git (for cloning the repository)
+- Virtual environment (recommended)
 
 ### Installation
 
@@ -37,66 +38,110 @@ The ETL project parses email data from the Enron Maildir dataset, extracting rel
    source venv/bin/activate
    ```
 
-## Project Structure
+### Data Setup
 
-```
-ETL/
-├── data/               # Directory for email data
-│   └── maildir/        # All users and respective emails
-│   └── data.tar.gz     # Compressed Enron dataset
-├── util/               # Utility modules
-│   └── fetch_data.py   # Creating dataset from Enron tarball
-│   └── parser.py       # Email parsing functionality
-├── main.py             # Main application entry point
-├── setup_venv.sh       # Virtual environment setup script
-└── README.md           # This documentation
+Run the ETL pipeline setup script to download and process the Enron dataset:
+```bash
+chmod +x etl_parse.sh
+./etl_parse.sh
 ```
 
-## Usage
+This script will:
+1. Download the Enron email dataset (~423MB)
+2. Extract the dataset (~1.7GB when extracted)
+3. Parse all emails and generate JSON files in the user_data directory
+
+## Running the Flask API
 
 1. Ensure your virtual environment is activated:
    ```bash
    source venv/bin/activate
    ```
 
-2. Create the data folder and then run the fetching script to get data:
+2. Start the Flask server:
    ```bash
-   cd util
-   mkdir data
-   python fetch_data.py
+   python app.py
    ```
+   The API will be available at `http://localhost:5002`
 
-3. Create the user_data folder and then run the parser to generate the 5 json files:
-   parser.py takes in the directory for the database and the number of emails to parse as cmd line args.
-   ```bash
-   mkdir user_data
-   python parser.py data/maildir <num_emails_to_parse>
-   ```
+### API Endpoints
 
-4. The script will process the emails and output parsing statistics.
+The API provides the following endpoints:
 
-5. To upload the parsed data to neo4j, start the neo4j database in the desktop app and run neo4j_uploader.py
-   ```bash
-   cd neo4j
-   python neo4j_uploader.py <max_emails> <max_users>
-   ```
+- `GET /` - Basic health check endpoint
 
-6. To view all nodes and relationships in the neo4j browser run the following cypher commands:
-   ```bash
-   MATCH (n) RETURN n;
-   ```
-   To remove all nodes and relationships in the neo4j browser run:
-   ```bash
-   MATCH (n) DETACH DELETE n;
-   ```
+- `GET /messages` - Get all email messages from the dataset
+  - Returns the contents of messages.json which contains all parsed email data
 
-## Customization
+- `GET /users` - Get all users from the dataset
+  - Returns the contents of users.json which maps user email addresses to unique IDs
 
-WARNING: `main.py` is currently deprecated
-You can modify the `main.py` file to:
-- Change the input data directories
-- Adjust the maximum number of emails to process
-- Customize the output format
+- `GET /threads` - Get all email threads
+  - Returns the contents of threads.json which maps thread subjects to unique IDs
+
+- `GET /user-threads` - Get mapping of users to their email threads
+  - Returns the contents of user_threads.json which shows which threads each user participated in
+
+- `GET /thread-users` - Get mapping of threads to their participating users
+  - Returns the contents of thread_users.json which shows which users participated in each thread
+
+Example API calls:
+```bash
+# Get all messages
+curl http://localhost:5002/messages
+
+# Get n messages
+curl http://localhost:5002/messages?limit={max_emails}
+
+# Get all users
+curl http://localhost:5002/users
+
+# Get n users
+curl http://localhost:5002/users?limit={max_users}
+
+# Get all threads
+curl http://localhost:5002/threads
+
+# Get user-thread mappings
+curl http://localhost:5002/user-threads
+
+# Get thread-user mappings
+curl http://localhost:5002/thread-users
+```
+
+## Project Structure
+
+```
+ETL/
+├── app.py              # Flask API application
+├── data/               # Directory for email data
+│   └── maildir/        # Extracted Enron dataset
+├── util/               # Utility modules
+│   ├── parser.py       # Email parsing functionality
+│   └── fetch_data.py   # Dataset download script
+├── user_data/          # Processed JSON files
+├── setup_venv.sh       # Virtual environment setup script
+├── setup_etl.sh        # ETL pipeline setup script
+└── README.md           # This documentation
+```
+
+## Development
+
+To modify the API or add new features:
+1. Make your changes to the relevant files
+2. Test your changes locally
+3. Update the documentation if you've added new endpoints or features
+
+## Troubleshooting
+
+1. If the API fails to start:
+   - Check that all JSON files exist in the user_data directory
+   - Ensure you're in the virtual environment
+   - Verify that Flask is installed (`pip install flask`)
+
+2. If data isn't loading:
+   - Run `setup_etl.sh` again to regenerate the JSON files
+   - Check the user_data directory for valid JSON files
 
 ## Deactivating the Environment
 
@@ -105,3 +150,10 @@ When you're done working with the project, deactivate the virtual environment:
 deactivate
 ```
 
+## License
+
+[Add your license information here]
+
+## Contact
+
+[Add your contact information here]

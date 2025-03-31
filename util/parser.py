@@ -8,14 +8,14 @@ import logging
 #
 # Precompiled regular expression patterns for email parsing
 #
-time_pattern = re.compile("Date: (?P<data>[A-Z][a-z]+, \d{1,2} [A-Z][a-z]+ \d{4} \d{2}:\d{2}:\d{2} -\d{4} \([A-Z]{3}\))")
-subject_pattern = re.compile("Subject: (?P<data>.*)")
-sender_pattern = re.compile("From: (?P<data>.*)")
-recipient_pattern = re.compile("To: (?P<data>.*)")
-cc_pattern = re.compile("cc: (?P<data>.*)")
-bcc_pattern = re.compile("bcc: (?P<data>.*)")
-msg_start_pattern = re.compile("\n\n", re.MULTILINE)  # Email body typically starts after two newlines
-msg_end_pattern = re.compile("\n+.*\n\d+/\d+/\d+ \d+:\d+ [AP]M", re.MULTILINE)  # Detect end of message in replies
+time_pattern = re.compile(r"Date: (?P<data>[A-Z][a-z]+, \d{1,2} [A-Z][a-z]+ \d{4} \d{2}:\d{2}:\d{2} -\d{4} \([A-Z]{3}\))")
+subject_pattern = re.compile(r"Subject: (?P<data>.*)")
+sender_pattern = re.compile(r"From: (?P<data>.*)")
+recipient_pattern = re.compile(r"To: (?P<data>.*)")
+cc_pattern = re.compile(r"cc: (?P<data>.*)")
+bcc_pattern = re.compile(r"bcc: (?P<data>.*)")
+msg_start_pattern = re.compile(r"\n\n", re.MULTILINE)  # Email body typically starts after two newlines
+msg_end_pattern = re.compile(r"\n+.*\n\d+/\d+/\d+ \d+:\d+ [AP]M", re.MULTILINE)  # Pattern to detect end of message in replies
 
 # Global data structures to store parsed email information
 feeds = []       # List to store all parsed email data
@@ -131,19 +131,19 @@ def parse_email(pathname, orig=True, progress_bar=None, max_files=20):
     if orig:
         progress_bar.close()
         try:
-            # Write all collected data to JSON files without limiting to the first 20 entries
-            with open('user_data/messages2.json', 'w') as f:
+            # Write all collected data to JSON files
+            with open('user_data/messages.json', 'w') as f:
                 json.dump(feeds, f)
-            with open('user_data/users2.json', 'w') as f:
+            with open('user_data/users.json', 'w') as f:
                 json.dump(users, f)
-            with open('user_data/threads2.json', 'w') as f:
+            with open('user_data/threads.json', 'w') as f:
                 json.dump(threads, f)
-            with open('user_data/thread-users2.json', 'w') as f:
+            with open('user_data/thread-users.json', 'w') as f:
                 # Convert sets to lists for JSON serialization
                 for thread in thread_users:
                     thread_users[thread] = list(thread_users[thread])
                 json.dump(thread_users, f)
-            with open('user_data/user-threads2.json', 'w') as f:
+            with open('user_data/user-threads.json', 'w') as f:
                 # Convert sets to lists for JSON serialization
                 for user in user_threads:
                     user_threads[user] = list(user_threads[user])
