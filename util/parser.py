@@ -114,7 +114,7 @@ def parse_email(pathname, orig=True, progress_bar=None, max_files=20):
             user_threads[user].add(thread_id)
  
         # Create the email entry and add it to the feeds list
-        entry =  {"time": time, "thread": thread_id, "sender": sender_id, "recipient": recipient_id, "cc": cc_ids, "bcc": bcc_ids, "message": message, "filepath": pathname}
+        entry =  {"time": time, "thread": thread_id, "sender": sender_id, "recipients": recipient_ids, "cc": cc_ids, "bcc": bcc_ids, "message": message, "filepath": pathname}
         feeds.append(entry)
         
         processed_files += 1
@@ -168,15 +168,18 @@ if __name__ == "__main__":
     
     file_path = sys.argv[1]
     
-    # Check if a maximum files argument was provided; default to 20 if not.
+    # Check if a maximum files argument was provided; default if not.
     if len(sys.argv) >= 3:
         try:
             max_files = int(sys.argv[2])
         except ValueError:
             print("Invalid value for max_files; please provide an integer.")
             sys.exit(1)
+    elif len(sys.argv) == 2:
+        max_files = 20000
     else:
-        max_files = 20
+        print("Usage: python parser.py <file_path> [max_files]")
+        sys.exit(1)
     
     try:
         parse_email(file_path, orig=True, max_files=max_files)
